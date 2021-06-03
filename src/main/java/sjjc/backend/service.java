@@ -18,9 +18,6 @@ public class service {
     @Autowired
     private HoldingRelationRepository holdingRelationRepository;
 
-    public Company getCompanyByMyId(String id) {
-        return companyRepository.findByMyId(id);
-    }
 
     private double calculateRisk(Company company){
         double safe=0;
@@ -39,6 +36,7 @@ public class service {
     public List<Map<String, Object>> findRelatedCompanies(String searchName) {
         List<Map<String, Object>> list = new ArrayList<>();
         Company root = companyRepository.findByOrgName(".*" + searchName + ".*");
+        System.out.println(root);
         Set<HoldingRelation> holdingRelations = holdingRelationRepository.getMultiDepthChildrenCompaniesRelations(root.getId());
         Set<Company> companies = new HashSet<>();
         for (HoldingRelation holdingRelation : holdingRelations) {
@@ -54,8 +52,8 @@ public class service {
 
             Map<String, String> relDataMap = new HashMap<>();
             relDataMap.put("id", holdingRelation.getId() + "");
-            relDataMap.put("source", from.getOrgName());
-            relDataMap.put("target", to.getOrgName());
+            relDataMap.put("source", from.getId()+"");
+            relDataMap.put("target", to.getId()+"");
             relDataMap.put("name", holdingRelation.getDisplayName());
             relDataMap.put("holdRatio", holdingRelation.getHoldRatio());
 
@@ -64,7 +62,7 @@ public class service {
             list.add(relationMap);
         }
         for (Company company : companies) {
-            System.out.println(company.getOrgName());
+            System.out.println(company.getName());
             Map<String, Object> nodeMap = new HashMap<>();
             nodeMap.put("group", "nodes");
             nodeMap.put("data", company);
@@ -104,8 +102,8 @@ public class service {
 
             Map<String, String> relDataMap = new HashMap<>();
             relDataMap.put("id", holdingRelation.getId() + "");
-            relDataMap.put("source", from.getOrgName());
-            relDataMap.put("target", to.getOrgName());
+            relDataMap.put("source", from.getId()+"");
+            relDataMap.put("target", to.getId()+"");
             relDataMap.put("name", holdingRelation.getDisplayName());
             relDataMap.put("holdRatio", holdingRelation.getHoldRatio());
 
@@ -142,8 +140,8 @@ public class service {
 
             Map<String, String> relDataMap = new HashMap<>();
             relDataMap.put("id", holdingRelation.getId() + "");
-            relDataMap.put("source", from.getOrgName());
-            relDataMap.put("target", to.getOrgName());
+            relDataMap.put("source", from.getId()+"");
+            relDataMap.put("target", to.getId()+"");
             relDataMap.put("name", holdingRelation.getDisplayName());
             relDataMap.put("holdRatio", holdingRelation.getHoldRatio());
 
@@ -152,7 +150,7 @@ public class service {
             list.add(relationMap);
         }
         for (Company company : companies) {
-            System.out.println(company.getOrgName());
+            System.out.println(company.getName());
             company.setSafety(calculateRisk(company));
             Map<String, Object> nodeMap = new HashMap<>();
             nodeMap.put("group", "nodes");
@@ -175,7 +173,7 @@ public class service {
         for(Company company:companies){
             Map<String,Object> map=new HashMap<>();
             map.put("id",company.getId()+"");
-            map.put("name",company.getOrgName());
+            map.put("name",company.getName());
             res.add(map);
         }
         return res;

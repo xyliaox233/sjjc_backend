@@ -23,7 +23,7 @@ public class Company implements Entity, Serializable {
     @Property(name = "stockId")
     String stockId;
     @Property(name = "orgName")
-    String orgName;
+    String name;
     @Property(name = "orgShortName")
     String orgShortName;
     @Property(name = "regAsset")
@@ -66,7 +66,7 @@ public class Company implements Entity, Serializable {
                 "myId:" + myId +
                 "orgId:" + orgId +
                 "stockId:" + stockId +
-                "orgName:" + orgName +
+                "name:" + name +
                 "orgShortName:" + orgShortName +
                 "regAsset:" + regAsset +
                 "staffNum:" + staffNum +
