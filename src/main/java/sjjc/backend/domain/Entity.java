@@ -1,4 +1,4 @@
 package sjjc.backend.domain;
 
-public interface Entity {
+public interface Entity{
 }

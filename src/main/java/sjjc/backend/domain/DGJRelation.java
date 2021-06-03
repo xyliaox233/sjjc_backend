@@ -7,11 +7,11 @@ import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 
-@RelationshipEntity(type = "持股")
+@RelationshipEntity(type = "董高监")
 @NoArgsConstructor
 @Data
 @Component
-public class HoldingRelation implements Serializable {
+public class DGJRelation implements Serializable {
     @Id
     @GeneratedValue
     int id;
@@ -22,32 +22,23 @@ public class HoldingRelation implements Serializable {
     @EndNode
     Entity to;
 
-    @Property(name = "displayName")
-    String displayName;
-
-    @Property(name = "holdRatio")
-    String holdRatio;
-
-    @Property(name = "isLargestHolding")
-    String isLargestHolding;
-
+    @Property(name = "position")
+    String position;
 
     @Override
     public int hashCode() {
         return id;
     }
-
     @Override
     public boolean equals(Object obj) {
         if (obj == null)
             return false;
         if (this == obj)
             return true;
-        if (obj instanceof HoldingRelation) {
-            return ((HoldingRelation) obj).getId() == this.id;
+        if (obj instanceof DGJRelation) {
+            return ((DGJRelation) obj).getId() == this.id;
         }
         return false;
     }
-
 
 }
