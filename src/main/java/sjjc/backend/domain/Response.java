@@ -8,5 +8,5 @@ import lombok.RequiredArgsConstructor;
 @Builder
 public class Response {
     Object content;
-    int status;
+    boolean success;
 }

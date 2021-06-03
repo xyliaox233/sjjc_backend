@@ -24,7 +24,7 @@ public class controller {
     @GetMapping(pre+"/findRelatedCompanies/{searchName}")
     public Response findRelatedCompaniesByName(@PathVariable String searchName){
         System.out.println(searchName);
-        return Response.builder().content(service.findRelatedCompanies(searchName)).status(0).build();
+        return Response.builder().content(service.findRelatedCompanies(searchName)).success(true).build();
     }
 
     /**
@@ -36,7 +36,7 @@ public class controller {
     @GetMapping(pre+"/findUpCompanies/{searchName}")
     public Response getUpCompaniesByName(@PathVariable String searchName){
         System.out.println(searchName);
-        return Response.builder().content(service.findUpCompanies(searchName)).status(0).build();
+        return Response.builder().content(service.findUpCompanies(searchName)).success(true).build();
     }
 
     /**
@@ -47,19 +47,19 @@ public class controller {
     @GetMapping(pre+"/findRiskChart/{companyName}")
     public Response findRiskChartByName(@PathVariable String companyName){
         System.out.println(companyName);
-        return Response.builder().content(service.findRiskChart(companyName)).status(0).build();
+        return Response.builder().content(service.findRiskChart(companyName)).success(true).build();
     }
 
     @GetMapping(pre+"/findDetail/{companyName}")
     public Response findDetail(@PathVariable String companyName){
         System.out.println(companyName);
-        return Response.builder().content(service.findDetail(companyName)).status(0).build();
+        return Response.builder().content(service.findDetail(companyName)).success(true).build();
     }
 
     @GetMapping(pre+"/getNameList/{keyWord}")
     public Response getNameList(@PathVariable String keyWord){
         System.out.println(keyWord);
-        return Response.builder().content(service.getNameList(keyWord)).status(0).build();
+        return Response.builder().content(service.getNameList(keyWord)).success(true).build();
     }
 
 }
