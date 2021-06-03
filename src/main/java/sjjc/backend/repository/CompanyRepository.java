@@ -17,10 +17,10 @@ public interface CompanyRepository extends Neo4jRepository<Company,Long> {
     Company findById(long id);
     Company findByMyId(String id);
 
-    @Query("MATCH (e:Company) where e.orgName=~{0} return ID(e),e limit 1")
+    @Query("MATCH (e:Company) where e.orgName=~$namePattern return ID(e),e limit 1")
     Company findByOrgName(String namePattern);
 
-    @Query("MATCH (e:Company) where e.orgName=~{0} return ID(e),e order by e.orgName limit 15")
+    @Query("MATCH (e:Company) where e.orgName=~$namePattern return ID(e),e order by e.orgName limit 15")
     LinkedList<Company> findCompaniesByKeyword(String namePattern);
 
 }
