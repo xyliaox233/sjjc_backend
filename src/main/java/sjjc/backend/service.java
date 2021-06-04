@@ -75,32 +75,38 @@ public class service {
                 HoldingRelation holdingRelation = holdingRelationRepository.getBiggestHolder(company.getId());
                 Entity biggestHolder=holdingRelation.getFrom();
 
-                if (biggestHolder instanceof Company) continue;
+                if (biggestHolder instanceof DGJ) {
 
-                Map<String, Object> holderMap = new HashMap<>();
-                nodeMap.put("group", "nodes");
-                nodeMap.put("data", biggestHolder);
-                nodeMap.put("classes", biggestHolder.getClass().getName().split("\\.")[3]);
-                list.add(holderMap);
+                    Map<String, Object> holderMap = new HashMap<>();
+                    holderMap.put("group", "nodes");
+                    holderMap.put("data", biggestHolder);
+                    holderMap.put("classes", biggestHolder.getClass().getName().split("\\.")[3]);
+                    list.add(holderMap);
 
-                Map<String, Object> holdingRelationMap = new HashMap<>();
+                    Map<String, Object> holdingRelationMap = new HashMap<>();
 
-                holdingRelationMap.put("group", "edges");
-                holdingRelationMap.put("classes", "HoldingRelation");
+                    holdingRelationMap.put("group", "edges");
+                    holdingRelationMap.put("classes", "HoldingRelation");
 
-                Map<String, String> relDataMap = new HashMap<>();
-                relDataMap.put("id", holdingRelation.getId() + "");
-                relDataMap.put("source", ((DGJ) biggestHolder).getId() +"");
-                relDataMap.put("target", company.getId()+"");
-                relDataMap.put("name", holdingRelation.getDisplayName());
-                relDataMap.put("holdRatio", holdingRelation.getHoldRatio());
+                    Map<String, String> relDataMap = new HashMap<>();
+                    relDataMap.put("id", holdingRelation.getId() + "");
+                    relDataMap.put("source", ((DGJ) biggestHolder).getId() + "");
+                    relDataMap.put("target", company.getId() + "");
+                    relDataMap.put("name", holdingRelation.getDisplayName());
+                    relDataMap.put("holdRatio", holdingRelation.getHoldRatio());
 
-                holdingRelationMap.put("data", relDataMap);
+                    holdingRelationMap.put("data", relDataMap);
 
-                System.out.println((biggestHolder));
+                    list.add(holdingRelationMap);
 
-                System.out.println("relation:"+ ((DGJ) biggestHolder).getId()+"---"+company.getId());
+                    System.out.println((biggestHolder));
+
+                    System.out.println("relation:" + ((DGJ) biggestHolder).getId() + "---" + company.getId());
+                }
             }
+        }
+        for(Map<String,Object> l:list){
+            System.out.println(l);
         }
         return list;
 
