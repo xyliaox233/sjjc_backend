@@ -194,7 +194,9 @@ public class service {
     }
 
     public Company findDetail(String companyName) {
-        return companyRepository.findByOrgName(".*"+companyName+".*");
+        Company company=companyRepository.findByOrgName(".*"+companyName+".*");
+        company.setSafety(calculateRisk(company));
+        return company;
     }
 
     public List<Map<String,Object>> getNameList(String keyword){
