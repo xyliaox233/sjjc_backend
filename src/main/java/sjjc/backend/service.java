@@ -31,7 +31,9 @@ public class service {
                 " stateOwnedRatio:" +stateOwnedRatio+
                 " scale:" +scale+
                 " centerDegree:" +centerDegree);
-        return Integer.parseInt(((safe*100)+"").split("\\.")[0])/100.0;
+        safe=Integer.parseInt(((safe*100)+"").split("\\.")[0])/100.0;
+        company.setName(company.getName()+" "+safe);
+        return safe;
     }
 
     public List<Map<String, Object>> findRelatedCompanies(String searchName) {
