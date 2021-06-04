@@ -11,13 +11,17 @@ import java.util.Set;
 
 @Repository
 @Transactional
-public interface HoldingRelationRepository extends Neo4jRepository<HoldingRelation,Long> {
+public interface HoldingRelationRepository extends Neo4jRepository<HoldingRelation,Integer> {
     @Query("MATCH (e1:Company)-[r:持股*1..4]->(e2:Company) where ID(e1)=$id and (ID(e1)<ID(e2) or ID(e1)>ID(e2)) return e1,e2,r")
-    Set<HoldingRelation> getMultiDepthChildrenCompaniesRelations(long id);
+    Set<HoldingRelation> getMultiDepthChildrenCompaniesRelations(int id);
 
     @Query("MATCH p=()-[r:持股]->(e2:Company) where ID(e2)=$id and r.isLargestHolding='1' return p")
-    HoldingRelation getBiggestHolder(long id);
+    HoldingRelation getBiggestHolder(int id);
 
-    @Query("MATCH (e1:Company)-[r:持股*1..6]->(e2:Company) where ID(e2)=$id and (ID(e1)<ID(e2) or ID(e1)>ID(e2)) return e1,e2,r")
-    Set<HoldingRelation> getMultiDepthUpperHoldersRelations(long id);
+    @Query("MATCH (e1:Company)-[r:持股*1..6]->(e2:Company)" +
+            " where ID(e2)=$id and (ID(e1)<ID(e2) or ID(e1)>ID(e2))" +
+            " return e1,e2,r")
+    Set<HoldingRelation> getMultiDepthUpperHoldersRelations(int id);
+
+
 }

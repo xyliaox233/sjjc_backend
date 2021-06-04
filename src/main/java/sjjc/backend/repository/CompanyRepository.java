@@ -13,14 +13,14 @@ import java.util.Set;
 
 @Repository
 @Transactional
-public interface CompanyRepository extends Neo4jRepository<Company,Long> {
-    Company findById(long id);
-    Company findByMyId(String id);
+public interface CompanyRepository extends Neo4jRepository<Company,Integer> {
 
     @Query("MATCH (e:Company) where e.orgName=~$namePattern return ID(e),e limit 1")
     Company findByOrgName(String namePattern);
 
     @Query("MATCH (e:Company) where e.orgName=~$namePattern and e.outDegree>'0' return ID(e),e order by e.orgName limit 15")
     LinkedList<Company> findCompaniesByKeyword(String namePattern);
+
+
 
 }

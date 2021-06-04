@@ -62,25 +62,9 @@ public class Company implements Entity, Serializable {
 
     @Override
     public String toString() {
-        return "{id:" + id +
-                "myId:" + myId +
-                "orgId:" + orgId +
-                "stockId:" + stockId +
-                "name:" + name +
-                "orgShortName:" + orgShortName +
-                "regAsset:" + regAsset +
-                "staffNum:" + staffNum +
-                "telephone:" + telephone +
-                "postcode:" + postcode +
-                "fax:" + fax +
-                "email:" + email +
-                "orgWebsite:" + orgWebsite +
-                "regAddressCn:" + regAddressCn +
-                "typeName:" + typeName +
-                "isStateOwned:" + isStateOwned +
-                "inDegree:" + inDegree +
-                "outDegree:" + outDegree +
-                "stateOwnedRatio:" + stateOwnedRatio +
+        return "{ id:" + id +
+                " name:" + name +
+                " orgShortName:" + orgShortName +
                 "}";
     }
     @Override

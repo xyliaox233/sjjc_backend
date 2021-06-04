@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import sjjc.backend.domain.Company;
+import sjjc.backend.domain.DGJ;
 import sjjc.backend.domain.Entity;
 import sjjc.backend.domain.HoldingRelation;
 import sjjc.backend.repository.CompanyRepository;
@@ -44,6 +45,7 @@ public class service {
             Company to = ((Company) holdingRelation.getTo());
             companies.add(from);
             companies.add(to);
+            System.out.println("relation:"+from.getId()+"---"+to.getId());
 
             Map<String, Object> relationMap = new HashMap<>();
 
@@ -62,7 +64,7 @@ public class service {
             list.add(relationMap);
         }
         for (Company company : companies) {
-            System.out.println(company.getName());
+            System.out.println(company.getId()+":"+company.getName());
             Map<String, Object> nodeMap = new HashMap<>();
             nodeMap.put("group", "nodes");
             nodeMap.put("data", company);
@@ -70,14 +72,34 @@ public class service {
             list.add(nodeMap);
 
             if (company.getId() != root.getId()) {
-                Entity biggestHolder = holdingRelationRepository.getBiggestHolder(company.getId()).getFrom();
+                HoldingRelation holdingRelation = holdingRelationRepository.getBiggestHolder(company.getId());
+                Entity biggestHolder=holdingRelation.getFrom();
+
                 if (biggestHolder instanceof Company) continue;
+
                 Map<String, Object> holderMap = new HashMap<>();
                 nodeMap.put("group", "nodes");
                 nodeMap.put("data", biggestHolder);
-                nodeMap.put("classes", biggestHolder.getClass().getName());
+                nodeMap.put("classes", biggestHolder.getClass().getName().split("\\.")[3]);
                 list.add(holderMap);
+
+                Map<String, Object> holdingRelationMap = new HashMap<>();
+
+                holdingRelationMap.put("group", "edges");
+                holdingRelationMap.put("classes", "HoldingRelation");
+
+                Map<String, String> relDataMap = new HashMap<>();
+                relDataMap.put("id", holdingRelation.getId() + "");
+                relDataMap.put("source", ((DGJ) biggestHolder).getId() +"");
+                relDataMap.put("target", company.getId()+"");
+                relDataMap.put("name", holdingRelation.getDisplayName());
+                relDataMap.put("holdRatio", holdingRelation.getHoldRatio());
+
+                holdingRelationMap.put("data", relDataMap);
+
                 System.out.println((biggestHolder));
+
+                System.out.println("relation:"+ ((DGJ) biggestHolder).getId()+"---"+company.getId());
             }
         }
         return list;
@@ -94,6 +116,7 @@ public class service {
             Company to = ((Company) holdingRelation.getTo());
             holders.add(from);
             holders.add(to);
+            System.out.println("relation:"+from.getId()+"---"+to.getId());
 
             Map<String, Object> relationMap = new HashMap<>();
 
@@ -112,11 +135,12 @@ public class service {
             list.add(relationMap);
         }
         for (Entity holder : holders) {
+            System.out.println("holder:");
             System.out.println(holder);
             Map<String, Object> nodeMap = new HashMap<>();
             nodeMap.put("group", "nodes");
             nodeMap.put("data", holder);
-            nodeMap.put("classes", holder.getClass().getName());
+            nodeMap.put("classes", holder.getClass().getName().split("\\.")[3]);
             list.add(nodeMap);
         }
         return list;
